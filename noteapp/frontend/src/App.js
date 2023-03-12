@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Note from './components/Note';
 import Notification from './components/Notification';
 import Footer from './components/Footer';
@@ -15,6 +15,8 @@ const App = () => {
 
   const [user, setUser] = useState('');
   const [showLogin, setShowLogin] = useState(false);
+
+  const noteFormRef = useRef();
 
   useEffect(() => {
     noteService.getAll().then((initialNotes) => {
@@ -65,6 +67,7 @@ const App = () => {
       important: Math.random() > 0.5,
     };
 
+    noteFormRef.current.toggleVisibility();
     noteService.create(noteObject).then((returnedNote) => {
       setNotes(notes.concat(returnedNote));
     });
@@ -81,7 +84,7 @@ const App = () => {
       .then((returnedNote) => {
         setNotes(notes.map((note) => (note.id !== id ? note : returnedNote)));
       })
-      .catch((error) => {
+      .catch((_error) => {
         setErrorMessage(
           `Note '${note.content}' was already removed from server`
         );
@@ -109,7 +112,7 @@ const App = () => {
             <p>{user.name} logged in</p>
             <button onClick={handleLogoutOnClick}>logout</button>
           </div>
-          <Togglable buttonLabel="new note">
+          <Togglable buttonLabel="new note" ref={noteFormRef}>
             <NoteForm handleNoteOnSubmit={handleNoteSubmit} />
           </Togglable>
         </div>
