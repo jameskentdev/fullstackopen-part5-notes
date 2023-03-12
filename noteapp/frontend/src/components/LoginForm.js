@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 const LoginForm = ({ handleSubmit }) => (
   <form onSubmit={handleSubmit}>
     <div>
@@ -11,5 +13,9 @@ const LoginForm = ({ handleSubmit }) => (
     <button type="submit">login</button>
   </form>
 );
+
+LoginForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+};
 
 export default LoginForm;
