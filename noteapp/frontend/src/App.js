@@ -60,17 +60,10 @@ const App = () => {
     setUser(null);
   };
 
-  const handleNoteSubmit = (event) => {
-    event.preventDefault();
-    const noteObject = {
-      content: event.target.note.value,
-      important: Math.random() > 0.5,
-    };
-
+  const addNote = async (noteObject) => {
     noteFormRef.current.toggleVisibility();
-    noteService.create(noteObject).then((returnedNote) => {
-      setNotes(notes.concat(returnedNote));
-    });
+    const returnedNote = await noteService.create(noteObject);
+    setNotes(notes.concat(returnedNote));
   };
 
   const notesToShow = showAll ? notes : notes.filter((note) => note.important);
@@ -113,7 +106,7 @@ const App = () => {
             <button onClick={handleLogoutOnClick}>logout</button>
           </div>
           <Togglable buttonLabel="new note" ref={noteFormRef}>
-            <NoteForm handleNoteOnSubmit={handleNoteSubmit} />
+            <NoteForm createNote={addNote} />
           </Togglable>
         </div>
       )}
