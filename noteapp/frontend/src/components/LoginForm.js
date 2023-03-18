@@ -10,7 +10,9 @@ const LoginForm = ({ handleSubmit }) => (
       password
       <input type="password" name="Password" id="password" />
     </div>
-    <button type="submit">login</button>
+    <button id="login-button" type="submit">
+      login
+    </button>
   </form>
 );
 
