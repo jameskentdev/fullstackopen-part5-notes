@@ -1,13 +1,13 @@
 describe('Note app', function () {
   beforeEach(function () {
-    cy.request('POST', 'http://localhost:3001/api/testing/reset');
+    cy.request('POST', `${Cypress.env('BACKEND')}/testing/reset`);
     const user = {
       name: 'Teddy Kent',
       username: 'teddy',
       password: 'password',
     };
 
-    cy.request('POST', 'http://localhost:3001/api/users', user);
+    cy.request('POST', `${Cypress.env('BACKEND')}/users`, user);
     cy.visit('');
   });
 
