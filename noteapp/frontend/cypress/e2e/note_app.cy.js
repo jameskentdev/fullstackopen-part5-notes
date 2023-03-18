@@ -47,10 +47,7 @@ describe('Note app', function () {
 
   describe('when logged in', function () {
     beforeEach(function () {
-      cy.contains('login').click();
-      cy.get('input:first').type('teddy');
-      cy.get('input:last').type('password');
-      cy.get('#login-button').click();
+      cy.login({ username: 'teddy', password: 'password' });
     });
 
     it('a new note can be created', function () {
@@ -62,9 +59,7 @@ describe('Note app', function () {
 
     describe('and a note exists', function () {
       beforeEach(function () {
-        cy.contains('new note').click();
-        cy.get('#note').type('another note cypress');
-        cy.contains('save').click();
+        cy.createNote({ content: 'another note cypress', important: true });
       });
 
       it('it can be made not important', function () {
